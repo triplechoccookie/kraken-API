@@ -1,22 +1,25 @@
 __author__ = 'Karsten'
 
-import urllib.request
-import json
-
-
-def get_data(last=0):
-    print("run get_data")
-    # TODO: implement me
-    return [0, 1, 2]
+import restHelper
+import time
 
 
 def get_server_time():
-    opener = urllib.request.build_opener()
-    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+    data = restHelper.get_data_from_URL('https://api.kraken.com/0/public/Time')
 
-    f = opener.open('https://api.kraken.com/0/public/Time')
+    unixtime = data['result']['unixtime']
 
-    data = json.loads(f.read().decode("utf-8"))
-    data = data['result']['unixtime']
+    return time.gmtime(unixtime)
 
-    print(data)
+
+def get_assets():
+    data = restHelper.get_data_from_URL('https://api.kraken.com/0/public/Assets')
+
+    return data
+
+
+def get_ticker(pair='XXBTZEUR'):
+    data = restHelper.get_data_from_URL('https://api.kraken.com/0/public/Ticker', {'pair': pair})
+
+    return data
+
