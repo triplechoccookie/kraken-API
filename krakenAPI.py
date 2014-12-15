@@ -1,6 +1,7 @@
 __author__ = 'Karsten'
 
 import urllib.request
+import json
 
 
 def get_data(last=0):
@@ -15,4 +16,7 @@ def get_server_time():
 
     f = opener.open('https://api.kraken.com/0/public/Time')
 
-    print(f.read())
+    data = json.loads(f.read().decode("utf-8"))
+    data = data['result']['unixtime']
+
+    print(data)
