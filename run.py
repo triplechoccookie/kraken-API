@@ -10,7 +10,13 @@ print('Serverzeit ist ' + time.strftime('%a, %d %b %Y %H:%M:%S +0000', krakenAPI
 
 print(krakenAPI.get_assets())
 
-print(krakenAPI.get_ticker('XXBTZEUR'))
+lasttimestamp = '0'
+while True:
+    data = krakenAPI.get_ohcl_data('XLTCZEUR', '1', lasttimestamp)
+    for item in data:
+        print(item)
+    lasttimestamp = data[-1]['timestamp']
+    time.sleep(10)
 
 
 print('closing')
