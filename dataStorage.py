@@ -10,7 +10,6 @@ def init_storage():
               close REAL, volume REAL, count REAL)''')
     c.execute('REPLACE INTO ohcl_1m VALUES (0,0,0,0,0,0,0)')
     connection.commit()
-
     connection.close()
 
 
@@ -30,11 +29,23 @@ def get_last_data_timestamp():
 def store_new_data(timestamp, high, low, open, close, volume, count):
     connection = sqlite3.connect('database.db')
     c = connection.cursor()
-
     data = (timestamp, high, low, open, close, volume, count)
-
     c.execute('REPLACE INTO ohcl_1m VALUES (?,?,?,?,?,?,?)', data)
-
     connection.commit()
-
     connection.close()
+
+
+def get_MA(length):
+    connection = sqlite3.connect('database.db')
+    c = connection.cursor()
+
+    data = (length, )
+    c.execute('SELECT close FROM ohcl_1m ORDER BY timestamp DESC LIMIT ?', data)
+    retdata = c.fetchall()
+
+    ma = 0.0
+    for item in retdata:
+        ma += float(item[0])
+    ma = ma / length
+
+    return ma
