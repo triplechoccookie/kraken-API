@@ -15,7 +15,7 @@ def run():
 
     print('Letzter Zeitstempel: ' + str(lasttimestamp))
 
-    data = krakenAPI.get_ohcl_data(interval='1', since=str(lasttimestamp))
+    data = krakenAPI.get_ohcl_data(interval='1', since=str(lasttimestamp-1))
 
     for item in data:
         dataStorage.store_new_data(int(item['timestamp']), float(item['high']), float(item['low']), float(item['open']),
