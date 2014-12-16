@@ -3,7 +3,9 @@ __author__ = 'Karsten'
 import dataStorage
 import time
 
-print('60 Minuten | 10 Minuten')
+print('105 Minuten | 50 Minuten | Differenz')
 while True:
-    print(str(dataStorage.get_MA(61)) + ' | ' +  str(dataStorage.get_MA(30)))
+    ma_big = dataStorage.get_MA(105)
+    ma_small = dataStorage.get_MA(50)
+    print(str(ma_big) + ' | ' +  str(ma_small) + ' | ' + str(ma_small - ma_big))
     time.sleep(60)
