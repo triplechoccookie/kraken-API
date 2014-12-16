@@ -5,4 +5,4 @@ import time
 
 while True:
     run.run()
-    time.sleep(600)
+    time.sleep(30)
