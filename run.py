@@ -1,33 +1,28 @@
 __author__ = 'Karsten'
 
 import krakenAPI
+import dataStorage
 import time
 
-print('starting')
+def run():
+
+    print('starting')
 
 
-print('Serverzeit ist ' + time.strftime('%a, %d %b %Y %H:%M:%S +0000', krakenAPI.get_server_time()))
+    print('Serverzeit ist ' + time.strftime('%a, %d %b %Y %H:%M:%S +0000', krakenAPI.get_server_time()))
 
-print(krakenAPI.get_assets())
+    lasttimestamp = dataStorage.get_last_data_timestamp()
 
-lasttimestampXBT = '0'
-lasttimestampLTC = '0'
-while True:
-    data = krakenAPI.get_ohcl_data('XLTCZEUR', '1', lasttimestampLTC)
-    if lasttimestampLTC != data[-1]['timestamp']:
-        lasttimestampLTC = data[-1]['timestamp']
-        print('EUR/LTC')
-        for item in data:
-            print(item)
+    print('Letzter Zeitstempel: ' + str(lasttimestamp))
 
-    data = krakenAPI.get_ohcl_data('XXBTZEUR', '1', lasttimestampXBT)
-    if lasttimestampXBT != data[-1]['timestamp']:
-        lasttimestampXBT = data[-1]['timestamp']
-        print('EUR/XBT')
-        for item in data:
-            print(item)
+    data = krakenAPI.get_ohcl_data(interval='1', since=str(lasttimestamp))
 
-    time.sleep(5)
+    for item in data:
+        dataStorage.store_new_data(int(item['timestamp']), float(item['high']), float(item['low']), float(item['open']),
+                                   float(item['close']), float(item['volume']), float(item['count']))
 
+    newtimestamp = dataStorage.get_last_data_timestamp()
 
-print('closing')
+    print('Neuester Zeitstempel: ' + str(newtimestamp))
+
+    print('closing')
