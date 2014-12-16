@@ -5,5 +5,5 @@ import time
 
 print('60 Minuten | 10 Minuten')
 while True:
-    print(str(dataStorage.get_MA(60)) + ' | ' +  str(dataStorage.get_MA(10)))
+    print(str(dataStorage.get_MA(61)) + ' | ' +  str(dataStorage.get_MA(30)))
     time.sleep(60)
