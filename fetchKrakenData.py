@@ -4,13 +4,12 @@ import krakenAPI
 import dataStorage
 import time
 
-def run():
-    lasttimestamp = dataStorage.get_last_data_timestamp()
+lasttimestamp = dataStorage.get_last_data_timestamp()
 
-    data = krakenAPI.get_ohcl_data(interval='1', since=str(lasttimestamp-1))
+data = krakenAPI.get_ohcl_data(interval='1', since=str(lasttimestamp-1))
 
-    for item in data:
-        dataStorage.store_new_data(int(item['timestamp']), float(item['high']), float(item['low']), float(item['open']),
-                                   float(item['close']), float(item['volume']), float(item['count']))
+for item in data:
+    dataStorage.store_new_data(int(item['timestamp']), float(item['high']), float(item['low']), float(item['open']),
+                               float(item['close']), float(item['volume']), float(item['count']))
 
-    newtimestamp = dataStorage.get_last_data_timestamp()
+newtimestamp = dataStorage.get_last_data_timestamp()
