@@ -1,8 +1,8 @@
 __author__ = 'Karsten'
 
-import run
+import fetchKrakenData
 import time
 
 while True:
-    run.run()
+    fetchKrakenData.run()
     time.sleep(30)
