@@ -1,7 +1,7 @@
 __author__ = 'Karsten'
 
 import sqlite3
-import statistics
+import math
 
 
 def init_storage():
@@ -65,7 +65,7 @@ def getMaStepByStep(length, startingTimestamp, stoppingTimestamp):
         tmp = retdata[i:(i+length)]
         for item in tmp:
             prices.append(item[0])
-        malist.append(statistics.mean(prices))
+        malist.append(average(prices))
 
     return malist
 
@@ -80,3 +80,7 @@ def getPriceHistory(startingTimstamp, stoppingTimestamp):
         retdata.append(item[0])
 
     return retdata
+
+
+def average(values):
+    return math.fsum(values) / len(values)
