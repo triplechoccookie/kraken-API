@@ -1,6 +1,7 @@
 __author__ = 'Karsten'
 
 import sqlite3
+import statistics
 
 
 def init_storage():
@@ -49,3 +50,33 @@ def get_MA(length):
     ma = ma / length
 
     return ma
+
+
+def getMaStepByStep(length, startingTimestamp, stoppingTimestamp):
+    connection = sqlite3.connect('database.db')
+    c = connection.cursor()
+
+    c.execute('SELECT close FROM ohcl_1m ORDER BY timestamp DESC')
+    retdata = c.fetchall()
+
+    malist = []
+    prices = []
+    for i in range(len(retdata)):
+        tmp = retdata[i:(i+length)]
+        for item in tmp:
+            prices.append(item[0])
+        malist.append(statistics.mean(prices))
+
+    return malist
+
+def getPriceHistory(startingTimstamp, stoppingTimestamp):
+    connection = sqlite3.connect('database.db')
+    c = connection.cursor()
+
+    c.execute('SELECT close FROM ohcl_1m ORDER BY timestamp DESC')
+
+    retdata = []
+    for item in c.fetchall():
+        retdata.append(item[0])
+
+    return retdata
