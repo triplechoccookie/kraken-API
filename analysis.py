@@ -45,11 +45,6 @@ def simulateTradeOnMaCrossoverWithFees(bigMA, smallMA, fee = 0, money = 100):
     return {'money': bank, 'coins': coin}
 
 
-
-
-
-
-
 def getTradeAdviceOnDifferenceWithDeadZone(diff, deadzone = 0):
     if(diff > (0 + deadzone)):
         return buy
