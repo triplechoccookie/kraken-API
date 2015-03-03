@@ -33,7 +33,6 @@ def get_ticker(pair='XXBTZEUR'):
 
     return data
 
-
 def get_ohcl_data(pair='XXBTZEUR', interval='15', since='0'):
     data = restHelper.get_data_from_URL('https://api.kraken.com/0/public/OHLC', {'pair': pair, 'interval': interval, 'since': since})
     if data['error'] == []:
@@ -48,3 +47,7 @@ def get_ohcl_data(pair='XXBTZEUR', interval='15', since='0'):
 
     return retval
 
+
+def get_assets():
+    assets = ('XBTEUR', 'XBTLTC')
+    return assets
