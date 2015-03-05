@@ -12,17 +12,19 @@ def create_table(asset_pair=DEFAULT_ASSET_PAIR):
 
     connection = sqlite3.connect(DATABASE)
     c = connection.cursor()
-    c.execute('''CREATE TABLE ''' + asset_pair + ''' (timestamp INTEGER PRIMARY KEY, high REAL, low REAL, open REAL,
-              close REAL, volume REAL, count REAL)''')
+    c.execute('CREATE TABLE IF NOT EXISTS ' + asset_pair +
+              ' (timestamp INTEGER PRIMARY KEY, high REAL, low REAL, open REAL, close REAL, volume REAL, count REAL)')
     c.execute('REPLACE INTO ' + asset_pair + ' VALUES (0,0,0,0,0,0,0)')
     connection.commit()
     connection.close()
 
 
 def get_last_data_timestamp(asset_pair=DEFAULT_ASSET_PAIR):
+    create_table(asset_pair)
     connection = sqlite3.connect(DATABASE)
     c = connection.cursor()
-    c.execute('SELECT MAX(timestamp) FROM' + asset_pair)
+    c.execute('SELECT MAX(timestamp) FROM ' + asset_pair)
+
     data = c.fetchall()
     connection.close()
 
@@ -33,6 +35,7 @@ def get_last_data_timestamp(asset_pair=DEFAULT_ASSET_PAIR):
 
 
 def store_new_data(timestamp, high, low, open, close, volume, count, asset_pair=DEFAULT_ASSET_PAIR):
+    create_table(asset_pair)
     connection = sqlite3.connect(DATABASE)
     c = connection.cursor()
     data = (timestamp, high, low, open, close, volume, count)
@@ -42,6 +45,7 @@ def store_new_data(timestamp, high, low, open, close, volume, count, asset_pair=
 
 
 def get_ma(length, asset_pair=DEFAULT_ASSET_PAIR):
+    create_table(asset_pair)
     connection = sqlite3.connect(DATABASE)
     c = connection.cursor()
 
@@ -58,6 +62,7 @@ def get_ma(length, asset_pair=DEFAULT_ASSET_PAIR):
 
 
 def get_ma_step_by_step(length, starting_timestamp, stopping_timestamp, asset_pair=DEFAULT_ASSET_PAIR):
+    create_table(asset_pair)
     connection = sqlite3.connect(DATABASE)
     c = connection.cursor()
 
@@ -76,6 +81,7 @@ def get_ma_step_by_step(length, starting_timestamp, stopping_timestamp, asset_pa
 
 
 def get_price_history(starting_timstamp, stopping_timestamp, asset_pair=DEFAULT_ASSET_PAIR):
+    create_table(asset_pair)
     connection = sqlite3.connect(DATABASE)
     c = connection.cursor()
 
