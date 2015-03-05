@@ -6,7 +6,7 @@ import time
 
 def get_server_time():
     data = restHelper.get_data_from_URL('https://api.kraken.com/0/public/Time')
-    if data['error'] == []:
+    if data['error'] is []:
         data = time.gmtime(data['result']['unixtime'])
     else:
         data = 0
@@ -16,7 +16,7 @@ def get_server_time():
 
 def get_assets():
     data = restHelper.get_data_from_URL('https://api.kraken.com/0/public/Assets')
-    if data['error'] == []:
+    if data['error'] is []:
         data = data['result']
     else:
         data = 0
@@ -24,18 +24,19 @@ def get_assets():
     return data
 
 
-def get_ticker(pair='XXBTZEUR'):
+def get_ticker(pair='XBTEUR'):
     data = restHelper.get_data_from_URL('https://api.kraken.com/0/public/Ticker', {'pair': pair})
-    if data['error'] == []:
+    if data['error'] is []:
         data = data['result']
     else:
         data = 0
 
     return data
 
-def get_ohcl_data(pair='XXBTZEUR', interval='15', since='0'):
-    data = restHelper.get_data_from_URL('https://api.kraken.com/0/public/OHLC', {'pair': pair, 'interval': interval, 'since': since})
-    if data['error'] == []:
+def get_ohcl_data(pair='XBTEUR', interval='15', since='0'):
+    data = restHelper.get_data_from_URL('https://api.kraken.com/0/public/OHLC', {'pair': pair, 'interval': interval,
+                                                                                 'since': since})
+    if data['error'] is []:
         data = data['result'][pair]
         retval = []
         for item in data:
@@ -48,6 +49,6 @@ def get_ohcl_data(pair='XXBTZEUR', interval='15', since='0'):
     return retval
 
 
-def get_assets():
+def get_supported_assets():
     assets = ('XBTEUR', 'XBTLTC')
     return assets

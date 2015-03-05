@@ -11,9 +11,9 @@ buy = 'buy'
 
 
 def simulateTradeOnMaCrossoverWithFees(bigMA, smallMA, fee = 0, money = 100):
-    bigMAs = dataStorage.getMaStepByStep(bigMA, 0, 0)
-    smallMAs = dataStorage.getMaStepByStep(smallMA, 0, 0)
-    prices = dataStorage.getPriceHistory(0, 0)
+    bigMAs = dataStorage.get_ma_step_by_step(bigMA, 0, 0)
+    smallMAs = dataStorage.get_ma_step_by_step(smallMA, 0, 0)
+    prices = dataStorage.get_price_history(0, 0)
     bank = money
     coin = 0.0
     trades = 0
