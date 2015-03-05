@@ -32,10 +32,10 @@ def get_last_data_timestamp(asset_pair=DEFAULT_ASSET_PAIR):
         return 0
 
 
-def store_new_data(timestamp, high, low, opening, close, volume, count, asset_pair=DEFAULT_ASSET_PAIR):
+def store_new_data(timestamp, high, low, open, close, volume, count, asset_pair=DEFAULT_ASSET_PAIR):
     connection = sqlite3.connect(DATABASE)
     c = connection.cursor()
-    data = (timestamp, high, low, opening, close, volume, count)
+    data = (timestamp, high, low, open, close, volume, count)
     c.execute('REPLACE INTO ' + asset_pair + ' VALUES (?,?,?,?,?,?,?)', data)
     connection.commit()
     connection.close()
