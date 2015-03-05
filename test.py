@@ -12,7 +12,7 @@ lock = threading.Lock()
 def worker(a, b):
     with lock:
         print(str(a) + '/' + str(b))
-    result = analysis.simulateTradeOnMaCrossoverWithFees(a, b, 0.002, 100)
+    result = analysis.simulate_trade_on_ma_crossover_with_fees(a, b, 0.002, 100)
     if result['money'] > 100:
         with lock:
             print(str(a) + '/' + str(b) + ': ' + str(result))
