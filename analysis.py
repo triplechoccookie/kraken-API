@@ -20,7 +20,7 @@ def simulate_trade_on_ma_crossover_with_fees(big_ma, small_ma, fee=0, money=100)
     oldadvice = noOperation
 
     for i in range(len(bigmas)):
-        diff = getDifference(bigmas[i], smallmas[i])
+        diff = get_difference(bigmas[i], smallmas[i])
         advice = get_trade_advice_on_difference_with_deadzone(diff, 0.01)
 
         if advice == oldadvice:
@@ -54,5 +54,5 @@ def get_trade_advice_on_difference_with_deadzone(diff, deadzone=0.0):
         return noOperation
 
 
-def getDifference(first, second):
+def get_difference(first, second):
     return first - second
