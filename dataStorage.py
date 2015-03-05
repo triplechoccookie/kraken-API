@@ -3,9 +3,12 @@ __author__ = 'Karsten'
 import sqlite3
 import math
 
+# global variables
+database_db = 'database.db'
 
 def init_storage():
-    connection = sqlite3.connect('database.db')
+
+    connection = sqlite3.connect(database_db)
     c = connection.cursor()
     c.execute('''CREATE TABLE ohcl_1m (timestamp INTEGER PRIMARY KEY, high REAL, low REAL, open REAL,
               close REAL, volume REAL, count REAL)''')
@@ -15,7 +18,7 @@ def init_storage():
 
 
 def get_last_data_timestamp():
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect(database_db)
     c = connection.cursor()
     c.execute('SELECT MAX(timestamp) FROM ohcl_1m')
     data = c.fetchall()
@@ -28,7 +31,7 @@ def get_last_data_timestamp():
 
 
 def store_new_data(timestamp, high, low, open, close, volume, count):
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect(database_db)
     c = connection.cursor()
     data = (timestamp, high, low, open, close, volume, count)
     c.execute('REPLACE INTO ohcl_1m VALUES (?,?,?,?,?,?,?)', data)
@@ -37,7 +40,7 @@ def store_new_data(timestamp, high, low, open, close, volume, count):
 
 
 def get_MA(length):
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect(database_db)
     c = connection.cursor()
 
     data = (length, )
@@ -53,7 +56,7 @@ def get_MA(length):
 
 
 def getMaStepByStep(length, startingTimestamp, stoppingTimestamp):
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect(database_db)
     c = connection.cursor()
 
     c.execute('SELECT close FROM ohcl_1m ORDER BY timestamp DESC')
@@ -70,7 +73,7 @@ def getMaStepByStep(length, startingTimestamp, stoppingTimestamp):
     return malist
 
 def getPriceHistory(startingTimstamp, stoppingTimestamp):
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect(database_db)
     c = connection.cursor()
 
     c.execute('SELECT close FROM ohcl_1m ORDER BY timestamp DESC')
