@@ -4,7 +4,7 @@ import urllib.request
 import json
 
 
-def get_data_from_URL(url, inputdata = {}):
+def get_data_from_URL(url, inputdata={}):
     params = urllib.parse.urlencode(inputdata)
     params = params.encode('utf-8')
 
