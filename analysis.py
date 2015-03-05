@@ -9,10 +9,9 @@ noOperation = 'nop'
 buy = 'buy'
 
 
-
 def simulate_trade_on_ma_crossover_with_fees(big_ma, small_ma, fee=0, money=100):
-    bigMAs = dataStorage.get_ma_step_by_step(big_ma, 0, 0)
-    smallMAs = dataStorage.get_ma_step_by_step(small_ma, 0, 0)
+    bigmas = dataStorage.get_ma_step_by_step(big_ma, 0, 0)
+    smallmas = dataStorage.get_ma_step_by_step(small_ma, 0, 0)
     prices = dataStorage.get_price_history(0, 0)
     bank = money
     coin = 0.0
@@ -20,8 +19,8 @@ def simulate_trade_on_ma_crossover_with_fees(big_ma, small_ma, fee=0, money=100)
 
     oldadvice = noOperation
 
-    for i in range(len(bigMAs)):
-        diff = getDifference(bigMAs[i], smallMAs[i])
+    for i in range(len(bigmas)):
+        diff = getDifference(bigmas[i], smallmas[i])
         advice = get_trade_advice_on_difference_with_deadzone(diff, 0.01)
 
         if advice == oldadvice:
@@ -46,7 +45,7 @@ def simulate_trade_on_ma_crossover_with_fees(big_ma, small_ma, fee=0, money=100)
     return {'money': bank, 'coins': coin}
 
 
-def get_trade_advice_on_difference_with_deadzone(diff, deadzone=0):
+def get_trade_advice_on_difference_with_deadzone(diff, deadzone=0.0):
     if diff > (0 + deadzone):
         return buy
     elif diff < (0 - deadzone):
