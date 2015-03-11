@@ -4,7 +4,7 @@ import analysis
 import threading
 import concurrent.futures
 
-
+'''
 # lock to serialize console output
 lock = threading.Lock()
 
@@ -27,3 +27,9 @@ if __name__ == '__main__':
                     pool.submit(worker, i, j)
 
     pool.shutdown()
+'''
+
+import krakenAPI
+
+data = krakenAPI.get_assets()
+print(data)
