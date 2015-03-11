@@ -49,10 +49,8 @@ def get_ohcl_data(pair='XBTEUR', interval='15', since='0'):
     return retval
 
 
-# preliminary asset list
 def get_supported_assets():
     assets = []
-
     data = restHelper.get_data_from_url('https://api.kraken.com/0/public/AssetPairs')
     if not data['error']:
         data = data['result']
