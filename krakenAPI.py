@@ -6,7 +6,7 @@ import time
 
 def get_server_time():
     data = restHelper.get_data_from_url('https://api.kraken.com/0/public/Time')
-    if data['error'] is []:
+    if not data['error']:
         data = time.gmtime(data['result']['unixtime'])
     else:
         data = 0
@@ -16,7 +16,7 @@ def get_server_time():
 
 def get_assets():
     data = restHelper.get_data_from_url('https://api.kraken.com/0/public/Assets')
-    if data['error'] is []:
+    if not data['error']:
         data = data['result']
     else:
         data = 0
@@ -26,7 +26,7 @@ def get_assets():
 
 def get_ticker(pair='XBTEUR'):
     data = restHelper.get_data_from_url('https://api.kraken.com/0/public/Ticker', {'pair': pair})
-    if data['error'] is []:
+    if not data['error']:
         data = data['result']
     else:
         data = 0
@@ -36,7 +36,7 @@ def get_ticker(pair='XBTEUR'):
 def get_ohcl_data(pair='XBTEUR', interval='15', since='0'):
     data = restHelper.get_data_from_url('https://api.kraken.com/0/public/OHLC', {'pair': pair, 'interval': interval,
                                                                                  'since': since})
-    if data['error'] is []:
+    if not data['error']:
         data = data['result'][pair]
         retval = []
         for item in data:
@@ -51,13 +51,14 @@ def get_ohcl_data(pair='XBTEUR', interval='15', since='0'):
 
 # preliminary asset list
 def get_supported_assets():
-    # assets = ('XBTEUR', 'XBTLTC', 'LTCEUR', 'LTCUSD', 'XBTNMC', 'XBTSTR', 'XBTXDG', 'XBTXRP', 'XBTXVN', 'XBTGBP', 'XBTJPY', 'XBTUSD', 'EURXVN', 'USDXVN')
     assets = []
 
     data = restHelper.get_data_from_url('https://api.kraken.com/0/public/AssetPairs')
-    if data['error'] is []:
+    if not data['error']:
         data = data['result']
-        for item in data:
-            assets.append({'altname': item['altname'], 'fee': item['fees'][0]})
+        for item in dict.keys(data):
+            assets.append({'altname': data[item]['altname'], 'fee': data[item]['fees'][0][1]})
+    else:
+        assets = 0
 
     return assets

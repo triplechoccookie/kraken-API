@@ -31,5 +31,5 @@ if __name__ == '__main__':
 
 import krakenAPI
 
-data = krakenAPI.get_assets()
+data = krakenAPI.get_supported_assets()
 print(data)
